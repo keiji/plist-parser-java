@@ -1,0 +1,13 @@
+*#
+*~
+.DS_Store
+
+*.class
+
+bin/
+gen/
+
+*.apk
+*.dex
+*.ap_
+*.jar
