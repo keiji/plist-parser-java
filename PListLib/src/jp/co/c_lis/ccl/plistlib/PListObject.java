@@ -121,6 +121,52 @@ public class PListObject implements IElement, Serializable {
     }
 
     /**
+     * 数値を設定.
+     * 
+     * @param val
+     */
+    public void set(double val) {
+        type = Type.Real;
+        value = val;
+    }
+
+    /**
+     * 数値を取得.
+     * 
+     * @return
+     * @throws PListException
+     */
+    public double getReal() throws PListException {
+        if (type != Type.Real) {
+            throw new PListException("value is not real.");
+        }
+        return ((Double) value).doubleValue();
+    }
+
+    /**
+     * 真偽値を設定.
+     * 
+     * @param val
+     */
+    public void set(boolean val) {
+        type = Type.Bool;
+        value = val;
+    }
+
+    /**
+     * 真偽値を取得.
+     * 
+     * @return
+     * @throws PListException
+     */
+    public boolean getBool() throws PListException {
+        if (type != Type.Bool) {
+            throw new PListException("value is not bool.");
+        }
+        return ((Boolean) value).booleanValue();
+    }
+
+    /**
      * 日付を設定.
      * 
      * @param val
@@ -250,7 +296,14 @@ public class PListObject implements IElement, Serializable {
             throws XmlPullParserException, IOException {
         array.clear();
         int eventType = 0;
-        while ((eventType = parser.next()) != XmlPullParser.END_TAG) {
+        while (true) {
+            eventType = parser.next();
+            if (eventType == XmlPullParser.END_TAG
+                    && parser.getName() != null
+                    && parser.getName().equals("array")) {
+                break;
+            }
+            
             switch (eventType) {
                 case XmlPullParser.START_TAG:
                     array.add(getValue(parser));
@@ -272,7 +325,14 @@ public class PListObject implements IElement, Serializable {
         dict.clear();
         int eventType = 0;
         Key key = null;
-        while ((eventType = parser.next()) != XmlPullParser.END_TAG) {
+        while (true) {
+            eventType = parser.next();
+            if (eventType == XmlPullParser.END_TAG
+                    && parser.getName() != null
+                    && parser.getName().equals("dict")) {
+                break;
+            }
+
             switch (eventType) {
                 case XmlPullParser.START_TAG:
                     String tagName = parser.getName();
@@ -327,6 +387,18 @@ public class PListObject implements IElement, Serializable {
             } catch (NumberFormatException e) {
                 Log.e(LOG_TAG, "NumberFormatException", e);
             }
+            return obj;
+        } else if (tagName.equals("real")) {
+            PListObject obj = new PListObject();
+            try {
+                obj.set(Double.parseDouble(parser.nextText()));
+            } catch (NumberFormatException e) {
+                Log.e(LOG_TAG, "NumberFormatException", e);
+            }
+            return obj;
+        } else if (tagName.equals("true") || tagName.equals("false")) {
+            PListObject obj = new PListObject();
+            obj.set(tagName.equals("true"));
             return obj;
         } else if (tagName.equals("date")) {
             PListObject obj = new PListObject();
@@ -401,7 +473,7 @@ public class PListObject implements IElement, Serializable {
         public void clear() {
             map.clear();
         }
-        
+
         /**
          * 指定したキーが格納されているか.
          * 
@@ -490,6 +562,34 @@ public class PListObject implements IElement, Serializable {
         }
 
         /**
+         * 指定したキーに対応する要素を数値で取得.
+         * 
+         * @return
+         * @throws PListException
+         */
+        public double getReal(String key) throws PListException {
+            IElement element = get(key);
+            if (element.getType() != Type.Real) {
+                throw new PListException(String.format("key %s's value is not real.", key));
+            }
+            return (Double) element.getValue();
+        }
+
+        /**
+         * 指定したキーに対応する要素を真偽値で取得.
+         * 
+         * @return
+         * @throws PListException
+         */
+        public boolean getBool(String key) throws PListException {
+            IElement element = get(key);
+            if (element.getType() != Type.Bool) {
+                throw new PListException(String.format("key %s's value is not bool.", key));
+            }
+            return (Boolean) element.getValue();
+        }
+
+        /**
          * 指定したキーに対応する要素を配列で取得.
          * 
          * @param key
@@ -559,7 +659,7 @@ public class PListObject implements IElement, Serializable {
         public void clear() {
             list.clear();
         }
-        
+
         /**
          * 配列のサイズ.
          * 
@@ -623,6 +723,34 @@ public class PListObject implements IElement, Serializable {
                 throw new PListException(String.format("index %d is not string.", idx));
             }
             return (String) element.getValue();
+        }
+
+        /**
+         * 指定したインデックスに対応する要素を数値で取得.
+         * 
+         * @return
+         * @throws PListException
+         */
+        public double getReal(int idx) throws PListException {
+            IElement element = get(idx);
+            if (element.getType() != Type.Real) {
+                throw new PListException(String.format("index %d is not real.", idx));
+            }
+            return (Double) element.getValue();
+        }
+
+        /**
+         * 指定したインデックスに対応する要素を真偽値で取得.
+         * 
+         * @return
+         * @throws PListException
+         */
+        public boolean getBool(int idx) throws PListException {
+            IElement element = get(idx);
+            if (element.getType() != Type.Bool) {
+                throw new PListException(String.format("index %d is not bool.", idx));
+            }
+            return (Boolean) element.getValue();
         }
 
         /**

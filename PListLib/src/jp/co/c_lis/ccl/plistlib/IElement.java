@@ -27,7 +27,9 @@ public interface IElement {
      * 要素の種類
      */
     public enum Type {
+            Bool,
             Integer,
+            Real,
             String,
             Date,
             Dict,

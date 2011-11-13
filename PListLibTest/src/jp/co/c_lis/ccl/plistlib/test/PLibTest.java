@@ -18,8 +18,8 @@ package jp.co.c_lis.ccl.plistlib.test;
 
 import java.io.InputStream;
 import java.util.Date;
+import java.util.Set;
 
-import jp.co.c_lis.ccl.plistlib.IElement;
 import jp.co.c_lis.ccl.plistlib.PListObject;
 import jp.co.c_lis.ccl.plistlib.PListObject.PListArray;
 import jp.co.c_lis.ccl.plistlib.PListObject.PListDict;
@@ -37,11 +37,9 @@ public class PLibTest extends AndroidTestCase {
 
         PListObject plist = new PListObject(is);
 
-        assertEquals(IElement.Type.Dict, plist.getType());
+        PListDict dict = plist.getDict();
 
-        PListDict dict = (PListDict) plist.getValue();
-
-        assertEquals(4, dict.size());
+        assertEquals(5, dict.size());
 
         for (String key : dict.keySet()) {
             if (key.equals("value1")) {
@@ -50,13 +48,16 @@ public class PLibTest extends AndroidTestCase {
             } else if (key.equals("code")) {
                 String str = dict.getString(key);
                 assertEquals("54235582305924389532", str);
+            } else if (key.equals("score")) {
+                Double val = dict.getReal(key);
+                assertEquals(43.42, val);
             } else if (key.equals("date")) {
                 Date date = dict.getDate(key);
-               
+
                 // 2011-11-12T03:14:00Z
                 java.util.Date tmp = new java.util.Date();
-                tmp.setYear(2011 - 1900);  // Dateの仕様
-                tmp.setMonth(11 - 1);  // Dateの仕様
+                tmp.setYear(2011 - 1900); // Dateの仕様
+                tmp.setMonth(11 - 1); // Dateの仕様
                 tmp.setDate(12);
                 tmp.setHours(3);
                 tmp.setMinutes(14);
@@ -79,20 +80,27 @@ public class PLibTest extends AndroidTestCase {
     private static final String[] nameArray = new String[] {
             null, "test1", "test2"
     };
+    private static final boolean[] existArray = new boolean[] {
+            false, true, false
+    };
 
     private void assertUser(PListDict user) {
 
         int id = 0;
         String name = null;
+        boolean exist = false;
         for (String key : user.keySet()) {
             if (key.equals("id")) {
                 id = user.getInteger(key);
             } else if (key.equals("name")) {
                 name = user.getString(key);
+            } else if (key.equals("exist")) {
+                exist = user.getBool(key);
             }
         }
 
         Log.d(LOG_TAG, String.format("%d : %s", id, name));
         assertEquals(nameArray[id], name);
+        assertEquals(existArray[id], exist);
     }
 }
