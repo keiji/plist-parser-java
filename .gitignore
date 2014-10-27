@@ -1,13 +1,20 @@
-*#
-*~
+.gradle
+/local.properties
 .DS_Store
+build
 
-*.class
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm
 
-bin/
-gen/
+*.iml
 
-*.apk
-*.dex
-*.ap_
-*.jar
+## Directory-based project format:
+.idea/
+
+## File-based project format:
+*.ipr
+*.iws
+
+## Plugin-specific files:
+
+# IntelliJ
+out/
