@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plist version="1.0">
+    <dict>
+        <key>value1</key>
+        <string>Keiji_Ariyama</string>
+        <key>code</key>
+        <string>54235582305924389532</string>
+        <key>score</key>
+        <real>43.42</real>
+        <key>date</key>
+        <date>2011-11-12T03:14:00Z</date>
+        <key>others</key>
+        <dict>
+            <key>test</key>
+            <true />
+        </dict>
+        <key>users</key>
+        <array>
+		    <dict>
+		        <key>exist</key>
+		        <true />
+		        <key>id</key>
+		        <integer>1</integer>
+		        <key>name</key>
+		        <string>test1</string>
+		    </dict>
+		    <dict>
+		        <key>id</key>
+		        <integer>2</integer>
+		        <key>name</key>
+		        <string>test2</string>
+		        <key>exist</key>
+		        <false />
+		    </dict>
+        </array>
+    </dict>
+</plist>
