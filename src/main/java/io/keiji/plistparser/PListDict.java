@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.keiji.plistparser.android;
+package io.keiji.plistparser;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -28,7 +28,7 @@ public class PListDict extends PListObject {
         super(null);
     }
 
-    void put(Key key, PListObject element) {
+    void put(Key key, PListObject element) throws PListException {
         map.put(key.getString(), element);
     }
 

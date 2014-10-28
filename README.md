@@ -1,16 +1,12 @@
-PListParser for Android
+PList Parser
 ====
-
-## Requirement
-
-\>= Android 1.6 (API Level 4)
 
 ## Usage
 
 See code below.
 
 ```java
-InputStream inputStream = getAssets().open("sample.plist");
+InputStream inputStream = ClassLoader.getSystemResourceAsStream("sample.plist");
 
 PListDict dict = PListParser.parse(inputStream);
 
@@ -20,6 +16,7 @@ Date date = dict.getDate("date");
 
 PListDict others = dict.getDict("others");
 PListArray array = dict.getArray("users");
+
 ```
 
 And here is the sample.plist file (in assets folder).

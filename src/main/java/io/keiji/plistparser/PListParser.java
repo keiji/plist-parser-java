@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 
-package io.keiji.plistparser.android;
-
-import android.util.Log;
+package io.keiji.plistparser;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -45,16 +43,16 @@ public class PListParser {
     private PListParser() {
     }
 
-    public static <T extends PListObject> T parse(InputStream is) {
+    public static <T extends PListObject> T parse(InputStream is) throws PListException {
         return parse(new InputStreamReader(is));
     }
 
-    public static <T extends PListObject> PListObject parse(String plist) {
+    public static <T extends PListObject> T parse(String plist) throws PListException {
         StringReader sr = new StringReader(plist);
         return parse(sr);
     }
 
-    public static <T extends PListObject> T parse(Reader reader) {
+    public static <T extends PListObject> T parse(Reader reader) throws PListException {
 
         PListObject plistObject = null;
 
@@ -75,17 +73,24 @@ public class PListParser {
             }
 
         } catch (XmlPullParserException e) {
-            Log.e(TAG, "XmlPullParserException", e);
+            throw new PListException(e.getMessage());
         } catch (IOException e) {
-            Log.e(TAG, "IOException", e);
-        }
+            throw new PListException(e.getMessage());
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                }
+            }
 
+        }
 
         return (T) plistObject;
     }
 
     private static void getChildValues(XmlPullParser parser, PListArray array)
-            throws XmlPullParserException, IOException {
+            throws XmlPullParserException, IOException, PListException {
         array.clear();
         int eventType = 0;
         while (true) {
@@ -105,7 +110,7 @@ public class PListParser {
     }
 
     private static void getChildValues(XmlPullParser parser, PListDict dict)
-            throws XmlPullParserException, IOException {
+            throws XmlPullParserException, IOException, PListException {
         dict.clear();
         int eventType = 0;
         Key key = null;
@@ -133,7 +138,7 @@ public class PListParser {
     }
 
     private static PListObject getValue(XmlPullParser parser) throws XmlPullParserException,
-            IOException {
+            IOException, PListException {
         if (parser.getEventType() != XmlPullParser.START_TAG) {
             return null;
         }

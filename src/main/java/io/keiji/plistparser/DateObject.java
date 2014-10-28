@@ -14,16 +14,18 @@
  * limitations under the License.
  */
 
-package io.keiji.plistparser.android;
+package io.keiji.plistparser;
 
-class IntegerObject extends PListObject<Integer> {
+import java.util.Date;
 
-    IntegerObject(Integer value) {
+class DateObject extends PListObject<Date> {
+
+    DateObject(Date value) {
         super(value);
     }
 
     @Override
-    public int getInt() throws PListException {
+    public Date getDate() throws PListException {
         return getValue();
     }
 
@@ -31,6 +33,7 @@ class IntegerObject extends PListObject<Integer> {
     void toString(StringBuffer sb, int indent, int level) {
         insertSpaces(sb, indent, level);
 
-        sb.append("<integer>").append(getValue()).append("</integer>").append('\n');
+        sb.append("<date>").append(getValue().toString()).append("</date>").append('\n');
     }
+
 }

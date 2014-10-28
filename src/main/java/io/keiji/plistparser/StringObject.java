@@ -14,12 +14,23 @@
  * limitations under the License.
  */
 
-package io.keiji.plistparser.android;
+package io.keiji.plistparser;
 
-public class PListException extends RuntimeException {
+class StringObject extends PListObject<String> {
 
-    public PListException(String message) {
-        super(message);
+    StringObject(String value) {
+        super(value);
     }
 
+    @Override
+    public String getString() throws PListException {
+        return getValue();
+    }
+
+    @Override
+    public void toString(StringBuffer sb, int indent, int level) {
+        insertSpaces(sb, indent, level);
+
+        sb.append("<string>").append(getValue()).append("</string>").append('\n');
+    }
 }

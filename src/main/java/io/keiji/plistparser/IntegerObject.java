@@ -14,23 +14,23 @@
  * limitations under the License.
  */
 
-package io.keiji.plistparser.android;
+package io.keiji.plistparser;
 
-class BoolObject extends PListObject<Boolean> {
+class IntegerObject extends PListObject<Integer> {
 
-    BoolObject(Boolean value) {
+    IntegerObject(Integer value) {
         super(value);
     }
 
     @Override
-    public boolean getBool() throws PListException {
+    public int getInt() throws PListException {
         return getValue();
     }
 
     @Override
-    public void toString(StringBuffer sb, int indent, int level) {
+    void toString(StringBuffer sb, int indent, int level) {
         insertSpaces(sb, indent, level);
 
-        sb.append(getValue() ? "<true />" : "<false />").append('\n');
+        sb.append("<integer>").append(getValue()).append("</integer>").append('\n');
     }
 }

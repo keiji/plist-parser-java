@@ -14,26 +14,23 @@
  * limitations under the License.
  */
 
-package io.keiji.plistparser.android;
+package io.keiji.plistparser;
 
-import java.util.Date;
+class BoolObject extends PListObject<Boolean> {
 
-class DateObject extends PListObject<Date> {
-
-    DateObject(Date value) {
+    BoolObject(Boolean value) {
         super(value);
     }
 
     @Override
-    public Date getDate() throws PListException {
+    public boolean getBool() throws PListException {
         return getValue();
     }
 
     @Override
-    void toString(StringBuffer sb, int indent, int level) {
+    public void toString(StringBuffer sb, int indent, int level) {
         insertSpaces(sb, indent, level);
 
-        sb.append("<date>").append(getValue().toString()).append("</date>").append('\n');
+        sb.append(getValue() ? "<true />" : "<false />").append('\n');
     }
-
 }

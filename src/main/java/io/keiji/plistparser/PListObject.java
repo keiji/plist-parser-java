@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.keiji.plistparser.android;
+package io.keiji.plistparser;
 
 import java.util.Date;
 
@@ -52,11 +52,11 @@ public abstract class PListObject<T> {
         throw new PListException("value is not date.");
     }
 
-    public PListDict getPListDict() {
+    public PListDict getPListDict() throws PListException {
         throw new PListException("value is not dict.");
     }
 
-    public PListArray getPListArray() {
+    public PListArray getPListArray() throws PListException {
         throw new PListException("value is not array.");
     }
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.keiji.plistparser.android;
+package io.keiji.plistparser;
 
 class RealObject extends PListObject<Double> {
 

@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package io.keiji.plistparser.android;
+package io.keiji.plistparser;
 
-import android.test.InstrumentationTestCase;
-import android.util.Log;
+import junit.framework.TestCase;
 
+import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Date;
 
-public class PListTest extends InstrumentationTestCase {
-    private static final String TAG = PListTest.class.getSimpleName();
+public class PListParserTest extends TestCase {
+    private static final String TAG = PListParserTest.class.getSimpleName();
 
-    private static final String FILE_NAME = "test.plist";
+    private static final String TEST_FILE_NAME = "test.plist";
 
     // 2011-11-12T03:14:00Z
     private static Calendar TEST_DATE = Calendar.getInstance();
@@ -48,9 +48,11 @@ public class PListTest extends InstrumentationTestCase {
     };
 
     public void testParsePLib() throws Exception {
+        InputStream is = ClassLoader.getSystemResourceAsStream(TEST_FILE_NAME);
 
-        PListDict dict = PListParser.parse(
-                getInstrumentation().getContext().getAssets().open(FILE_NAME));
+        PListDict dict = PListParser.parse(is);
+
+        is.close();
 
         assertEquals(6, dict.size());
 
@@ -81,7 +83,7 @@ public class PListTest extends InstrumentationTestCase {
         }
     }
 
-    private void assertUser(PListDict user) {
+    private void assertUser(PListDict user) throws PListException {
 
         int id = user.getInt("id");
 
@@ -93,8 +95,6 @@ public class PListTest extends InstrumentationTestCase {
 
         String name = user.getString("name");
         boolean exist = user.getBool("exist");
-
-        Log.d(TAG, String.format("%d : %s", id, name));
 
         assertEquals(NAME_ARRAY[id], name);
         assertEquals(EXIST_ARRAY[id], exist);
