@@ -70,10 +70,10 @@ public class PListParserTest extends TestCase {
         Date tmp = TEST_DATE.getTime();
         assertEquals(tmp.toString(), date.toString());
 
-        PListDict others = dict.getDict("others");
+        PListDict others = dict.getPListDict("others");
         assertTrue(others.getBool("test"));
 
-        PListArray array = dict.getArray("users");
+        PListArray array = dict.getPListArray("users");
         assertEquals(2, array.size());
 
         int len = array.size();

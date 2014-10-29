@@ -30,6 +30,11 @@ class DateObject extends PListObject<Date> {
     }
 
     @Override
+    Type getType() {
+        return Type.Date;
+    }
+
+    @Override
     void toString(StringBuffer sb, int indent, int level) {
         insertSpaces(sb, indent, level);
 

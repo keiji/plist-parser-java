@@ -28,6 +28,11 @@ class StringObject extends PListObject<String> {
     }
 
     @Override
+    Type getType() {
+        return Type.String;
+    }
+
+    @Override
     public void toString(StringBuffer sb, int indent, int level) {
         insertSpaces(sb, indent, level);
 

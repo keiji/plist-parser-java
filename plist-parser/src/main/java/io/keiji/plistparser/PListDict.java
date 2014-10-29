@@ -75,18 +75,23 @@ public class PListDict extends PListObject {
         return get(key).getBool();
     }
 
-    public PListArray getArray(String key) throws PListException {
+    public PListArray getPListArray(String key) throws PListException {
         if (!(get(key) instanceof PListArray)) {
             throw new PListException("key " + key + " is not PListArray object.");
         }
         return (PListArray) get(key);
     }
 
-    public PListDict getDict(String key) throws PListException {
+    public PListDict getPListDict(String key) throws PListException {
         if (!(get(key) instanceof PListDict)) {
             throw new PListException("key " + key + " is not PListDict object.");
         }
         return (PListDict) get(key);
+    }
+
+    @Override
+    Type getType() {
+        return Type.Dict;
     }
 
     @Override
@@ -121,6 +126,11 @@ class Key extends PListObject<String> {
     @Override
     public String getString() throws PListException {
         return getValue();
+    }
+
+    @Override
+    Type getType() {
+        return Type.Key;
     }
 
     @Override

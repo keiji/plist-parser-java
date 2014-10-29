@@ -78,6 +78,11 @@ public class PListArray extends PListObject<PListObject> {
     }
 
     @Override
+    Type getType() {
+        return Type.Array;
+    }
+
+    @Override
     void toString(StringBuffer sb, int indent, int level) {
         insertSpaces(sb, indent, level);
         sb.append("<array>").append('\n');

@@ -20,6 +20,17 @@ import java.util.Date;
 
 public abstract class PListObject<T> {
 
+    public enum Type {
+        Key,
+        String,
+        Int,
+        Real,
+        Bool,
+        Date,
+        Dict,
+        Array
+    }
+
     private static final int DEFAULT_INDENT = 4;
 
     private T value;
@@ -86,6 +97,8 @@ public abstract class PListObject<T> {
             sb.append(' ');
         }
     }
+
+    abstract Type getType();
 
     abstract void toString(StringBuffer sb, int indent, int level);
 }
