@@ -67,7 +67,7 @@ public class PListParserTest extends TestCase {
 
         Date date = dict.getDate("date");
 
-        java.util.Date tmp = TEST_DATE.getTime();
+        Date tmp = TEST_DATE.getTime();
         assertEquals(tmp.toString(), date.toString());
 
         PListDict others = dict.getDict("others");

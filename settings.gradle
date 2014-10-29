@@ -1,2 +1,4 @@
-rootProject.name = 'plist-parser'
+rootProject.name = 'plist-parser-java'
+
+include 'plist-parser'
 
